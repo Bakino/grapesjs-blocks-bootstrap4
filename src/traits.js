@@ -92,4 +92,24 @@ export default (editor, config = {}) => {
     }
   });
 
+  tm.addType('content', {
+    events:{
+      'keyup': 'onChange',
+    },
+
+    onValueChange: function () {
+      var md = this.model;
+      var target = md.target;
+      target.set('content', md.get('value'));
+    },
+
+    getInputEl: function() {
+      if(!this.inputEl) {
+        this.inputEl = textTrait.prototype.getInputEl.bind(this)();
+        this.inputEl.value = this.target.get('content');
+      }
+      return this.inputEl;
+    }
+  });
+
 }
